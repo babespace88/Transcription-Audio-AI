@@ -3,34 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transcription App</title>
+    <title>Audio Translation App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #e9ecef; /* Light grey background */
+            background-color: #f0f4f8; 
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 20px;
         }
         .container {
             background: white;
-            padding: 40px; /* Increased padding for more space */
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             width: 90%;
             max-width: 600px;
             transition: transform 0.2s;
-        }
-        .container:hover {
-            transform: scale(1.02); /* Slight scale on hover */
         }
         h1 {
             font-size: 28px;
@@ -40,8 +35,8 @@
         input, select {
             width: 100%;
             padding: 12px;
-            margin-bottom: 15px; /* Reduced margin to tighten spacing */
-            border: 2px solid #007bff;
+            margin: 10px 0;
+            border: 2px solid #007bff; 
             border-radius: 8px;
             font-size: 16px;
         }
@@ -50,19 +45,13 @@
             padding: 12px;
             border: none;
             border-radius: 8px;
-            background: linear-gradient(45deg, #007bff, #0056b3);
+            background: linear-gradient(45deg, #007bff, #0056b3); 
             color: white;
             font-size: 18px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
         }
         button:hover {
             background: linear-gradient(45deg, #0056b3, #007bff);
-        }
-        h2 {
-            margin: 20px 0 10px;
-            font-size: 22px;
-            color: #333;
         }
         pre {
             background: #f8f9fa;
@@ -78,11 +67,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Transcription App</h1>
-        <input type="text" id="apiKey" placeholder="Enter your API Key" />
-        <input type="file" id="fileInput" accept="audio/*,video/*" />
-        <button id="submitButton">Upload and Transcribe</button>
-        <h2>Transcription Result:</h2>
+        <h1>Audio Translation App</h1>
+        <input type="text" id="apiKey" placeholder="Enter your OpenAI API Key" />
+        <input type="file" id="fileInput" accept=".mp3,.wav" />
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="ms">Malay</option>
+            <option value="id">Indonesian</option>
+        </select>
+        <button id="submitButton">Upload and Process</button>
+        <h2>Result:</h2>
         <pre id="result"></pre>
     </div>
 
@@ -90,6 +84,7 @@
         document.getElementById('submitButton').onclick = async function() {
             const apiKey = document.getElementById('apiKey').value;
             const fileInput = document.getElementById('fileInput');
+            const language = document.getElementById('languageSelect').value;
 
             // Validate input
             if (!fileInput.files.length || !apiKey) {
@@ -100,28 +95,26 @@
             const file = fileInput.files[0];
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('api_key', apiKey);
+            formData.append('model', 'whisper-1');  // Assuming using Whisper for transcription
+            formData.append('language', language);
 
-            // Replace with your transcription API endpoint
-            const apiUrl = 'https://api.openai.com/v1/audio/transcriptions'; 
+            const transcriptionUrl = 'https://api.openai.com/v1/audio/transcriptions'; // Define the correct endpoint
 
-            // Call transcription API
             try {
-                const response = await fetch(apiUrl, {
+                const response = await fetch(transcriptionUrl, {
                     method: 'POST',
                     headers: {
-                        // Specify if your API needs additional headers
+                        'Authorization': `Bearer ${apiKey}`,
                     },
-                    body: formData // Send the form data containing the file
+                    body: formData
                 });
 
-                // Get results and display them
                 if (response.ok) {
                     const resultData = await response.json();
-                    document.getElementById('result').innerText = JSON.stringify(resultData, null, 2);
+                    document.getElementById('result').innerText = resultData.text || "No result.";
                 } else {
                     const errorData = await response.json();
-                    document.getElementById('result').innerText = `Error: ${errorData.message}`;
+                    document.getElementById('result').innerText = `Error: ${errorData.error.message}`;
                 }
             } catch (error) {
                 document.getElementById('result').innerText = `Error: ${error.message}`;
