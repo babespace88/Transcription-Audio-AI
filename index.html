@@ -6,6 +6,9 @@
     <title>Transcription App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             display: flex;
             flex-direction: column;
@@ -19,51 +22,42 @@
         }
         .container {
             background: white;
-            padding: 30px;
+            padding: 40px; /* Increased padding for more space */
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             width: 90%;
             max-width: 600px;
-            transition: transform 0.2s; /* Animation effect */
+            transition: transform 0.2s;
         }
         .container:hover {
             transform: scale(1.02); /* Slight scale on hover */
         }
         h1 {
-            margin: 0 0 20px;
             font-size: 28px;
             color: #333;
             text-align: center;
         }
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #007bff; /* Blue border color */
+            margin-bottom: 15px; /* Reduced margin to tighten spacing */
+            border: 2px solid #007bff;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.2s;
-        }
-        input:focus {
-            border-color: #0056b3; /* Darker blue on focus */
-            outline: none; /* Remove default outline */
         }
         button {
             width: 100%;
             padding: 12px;
-            margin-top: 10px;
             border: none;
             border-radius: 8px;
-            background: linear-gradient(45deg, #007bff, #0056b3); /* Gradient background */
+            background: linear-gradient(45deg, #007bff, #0056b3);
             color: white;
             font-size: 18px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s; /* Transition for background and scale */
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            transition: background 0.3s, transform 0.2s;
         }
         button:hover {
-            background: linear-gradient(45deg, #0056b3, #007bff); /* Reverse gradient on hover */
-            transform: scale(1.05); /* Slight scale on hover */
+            background: linear-gradient(45deg, #0056b3, #007bff);
         }
         h2 {
             margin: 20px 0 10px;
@@ -75,10 +69,10 @@
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            white-space: pre-wrap; /* Preserve formatting */
-            word-wrap: break-word; /* Break long words */
-            max-height: 300px; /* Limit the height */
-            overflow-y: auto; /* Add scroll for overflow */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
         }
     </style>
 </head>
