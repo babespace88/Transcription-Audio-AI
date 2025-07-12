@@ -22,6 +22,8 @@ The project leverages the Web Speech API for speech recognition and is ideal for
 
 
 
+
+
 ✨ Features
 
 
@@ -33,9 +35,11 @@ The project leverages the Web Speech API for speech recognition and is ideal for
 
 💬 Auto-punctuation support
 
-🌍 Supports Multiple Languages (via browser's speech API support)
+🌍 Supports English, Malay & Indonesia Language
 
-💾 *Export / Copy Transcript (coming soon)
+
+
+
 
 
 
